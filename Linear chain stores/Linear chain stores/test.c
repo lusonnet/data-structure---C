@@ -99,8 +99,79 @@ int LocateElem(LinkList L, ElemType e)//返回序号
 		return 0;
 }
 
+int ListInsert(LinkList *L, int i, ElemType e)//插入
+{
+	LinkList p ,s;
+	p = *L;
+	int j = 0;//从头结点开始
+	while (p && j < i - 1)//p指向第i-1个结点，寻找第i-1个结点
+	{
+		p = p->next;
+		j++;
+	}
+	if (!p || j > i - 1)
+		return 0;
+	else
+	{
+		s = (LinkList)malloc(sizeof(Node));
+		s->data = e;
+		s->next = p->next;
+		p->next = s;
+	}
+	return 1;
+}
 
+int ListDelete(LinkList* L, int i, ElemType* e)//删除
+{
+	LinkList p ,q;
+	p = *L;
+	int j = 1;
+	while (p->next && j < i - 1)//这里为什么不是P的原因：取值范围，插入最多只能插入到最后一个结点前，如果它的下一个指向为空，则超了取值范围。
+	{
+		p = p->next;
+		j++;
+	}
+	if (!(p->next) || j > i - 1)
+		return 0;
+	q = p->next;//保存地址
+	p->next = q->next;
+	*e = q->data;//保存数据
+	free(q);
+	return 1;
+}
 
+int InsertBefore(LinkList *L,int n)//前插法
+{
+	LinkList p;
+	int i;//计数器
+	*L = (LinkList)malloc(sizeof(Node));
+	(*L)->next = NULL;//建立带头结点的单链表
+	for (i = 0; i < n; i++)
+	{
+		p = (LinkList)malloc(sizeof(Node));//生成新结点
+		printf("输入新结点的数据域：%d\n");
+		scanf("%d", p->data);
+		p->next = (*L)->next;
+		(*L)->next = p;
+	}
+}
+
+void InsertAfter(LinkList* L, int n)
+{
+	LinkList p, r;
+	int i;
+	*L = (LinkList)malloc(sizeof(Node));
+	r = *L;//r为指向尾结点的变量
+	for (i = 0; i < n; i++)
+	{
+		p = (Node*)malloc(sizeof(Node));//生成新结点
+		printf("输入新结点的数据域：%d\n");
+		scanf("%d", p->data);
+		r->next = p;//将新结点赋予指向尾结点的变量
+		r = p;//将新结点定义为表尾终端结点
+	}
+	r->next = NULL;//终止链表
+}
 int main()
 {
 
