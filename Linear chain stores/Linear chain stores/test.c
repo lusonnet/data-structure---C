@@ -7,6 +7,13 @@ typedef struct Node
 	struct Node* next;
 }Node,*LinkList;
 
+typedef struct DulNode
+{
+	ElemType data;
+	struct DulNode* prior;//前驱指针
+	struct DulNode* next;//后继指针
+}DulNode,*DuLinlList;
+
 int InitList(LinkList *L)//初始化
 {
 	*L = (LinkList)malloc(sizeof(Node));
